@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     //Timer
 
-    let deadline = '2020-04-20';
+    let deadline = '2020-04-06';
 
     function getTimeRemaining(endTime) {
         let t = Date.parse(endTime) - Date.parse(new Date()),
@@ -73,9 +73,6 @@ window.addEventListener('DOMContentLoaded', function() {
                 minutes.textContent = t.minutes;
                 seconds.textContent = t.seconds;
             }
-            // hours.textContent = t.hours;
-            // minutes.textContent = t.minutes;
-            // seconds.textContent = t.seconds;
 
             if (t.total <= 0) {
                 clearInterval(timeInterval);
@@ -87,4 +84,29 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     setClock('timer', deadline);
+
+    // Modal
+
+    let moreBtn = document.querySelector('button.more'),
+        moreTabBtns = document.querySelectorAll('.description-btn'),
+        modalWindow = document.querySelector('.overlay'),
+        modalWindowClose = modalWindow.querySelector('.popup-close');
+    
+    let openModal = function() {
+        modalWindow.style.display = 'block';
+        this.classList.add('more-splash');
+        document.body.style.overflow = 'hidden';
+ 
+        modalWindowClose.addEventListener('click', () => {
+        modalWindow.style.display = 'none';
+        this.classList.remove('more-splash');
+        document.body.style.overflow = '';
+        });
+    };
+    
+    moreBtn.addEventListener('click', openModal.bind(moreBtn));
+    
+    moreTabBtns.forEach(moreTabBtn => {
+        moreTabBtn.addEventListener('click', openModal.bind(moreTabBtn));
+    });
 });
